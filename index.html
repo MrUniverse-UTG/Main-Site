@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Realms of Legacy: A Science Fantasy TTRPG</title>
-  <!-- Favicon: adaptive SVG (black logo on light themes, white on dark), .ico fallback -->
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="images/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
@@ -18,7 +17,7 @@
       line-height: 1.75;
       overflow-x: hidden;
     }
-    /* ─── Layout ─── */
+    /* Layout  */
     .container {
       position: relative;
       z-index: 1;
@@ -27,11 +26,11 @@
       padding: 0 2rem;
     }
     section { position: relative; z-index: 1; }
-    /* ─── Utility ─── */
+    /* Utility  */
     .glow-text { text-shadow: 0 0 20px var(--cyan-glow), 0 0 60px rgba(79,195,247,0.15); }
     .gold-text { color: var(--gold); }
     .dim { color: var(--text-dim); }
-    /* ─── Navigation ─── */
+    /* Navigation  */
     nav {
       position: fixed;
       top: 0;
@@ -92,8 +91,8 @@
       .nav-links.open { display: flex; }
       .nav-links a { font-size: 0.85rem; padding: 0.6rem 0; }
     }
-    /* ─── Hero ─── */
-    #hero {
+    /* mainBanner  */
+    #mainBanner {
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -102,14 +101,14 @@
       padding: 8rem 2rem 6rem;
       position: relative;
     }
-    .hero-vignette {
+    .mainBanner-vignette {
       position: absolute;
       inset: 0;
       background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 0%, rgba(4,6,15,0.55) 100%);
       pointer-events: none;
     }
-    .hero-content { position: relative; z-index: 2; max-width: 820px; }
-    .hero-eyebrow {
+    .mainBanner-content { position: relative; z-index: 2; max-width: 820px; }
+    .mainBanner-eyebrow {
       font-family: var(--font-heading);
       font-size: 0.75rem;
       letter-spacing: 0.35em;
@@ -119,7 +118,7 @@
       opacity: 0;
       animation: fadeUp 0.8s 0.2s ease forwards;
     }
-    .hero-title {
+    .mainBanner-title {
       font-family: var(--font-display);
       font-size: clamp(2.4rem, 7vw, 5rem);
       font-weight: 700;
@@ -129,8 +128,8 @@
       opacity: 0;
       animation: fadeUp 0.9s 0.4s ease forwards;
     }
-    .hero-title span { color: var(--gold); }
-    .hero-subtitle {
+    .mainBanner-title span { color: var(--gold); }
+    .mainBanner-subtitle {
       font-family: var(--font-heading);
       font-size: clamp(0.85rem, 2vw, 1.05rem);
       letter-spacing: 0.2em;
@@ -140,7 +139,7 @@
       opacity: 0;
       animation: fadeUp 0.9s 0.55s ease forwards;
     }
-    .hero-divider {
+    .mainBanner-divider {
       width: 120px;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
@@ -148,7 +147,7 @@
       opacity: 0;
       animation: fadeIn 0.8s 0.7s ease forwards;
     }
-    .hero-lore {
+    .mainBanner-lore {
       font-size: 1.1rem;
       font-style: italic;
       color: var(--text-dim);
@@ -157,7 +156,7 @@
       opacity: 0;
       animation: fadeUp 0.9s 0.8s ease forwards;
     }
-    .hero-actions {
+    .mainBanner-actions {
       display: flex;
       gap: 1rem;
       justify-content: center;
@@ -165,7 +164,7 @@
       opacity: 0;
       animation: fadeUp 0.9s 1s ease forwards;
     }
-    /* ─── Buttons ─── */
+    /* Buttons  */
     .btn {
       display: inline-block;
       font-family: var(--font-heading);
@@ -209,7 +208,7 @@
       border-color: #8b9cf4;
       transform: translateY(-2px);
     }
-    /* ─── Sections ─── */
+    /* Sections  */
     .section { padding: 6rem 0; }
     .section-label {
       font-family: var(--font-heading);
@@ -239,7 +238,7 @@
       max-width: 660px;
       line-height: 1.85;
     }
-    /* ─── About ─── */
+    /* About  */
     #about { background: linear-gradient(180deg, transparent 0%, rgba(13,22,48,0.6) 50%, transparent 100%); }
     #about .container {
       display: grid;
@@ -294,7 +293,7 @@
       #about .container { grid-template-columns: 1fr; gap: 3rem; }
       .about-visual { display: none; }
     }
-    /* ─── How It Plays ─── */
+    /* How It Plays  */
     #how {
       background: linear-gradient(135deg, rgba(8,13,28,0.95) 0%, rgba(13,22,48,0.8) 100%);
       border-top: 1px solid var(--border);
@@ -350,7 +349,7 @@
     @media (max-width: 720px) {
       .modes-grid { grid-template-columns: 1fr; }
     }
-    /* ─── Setting ─── */
+    /* Setting  */
     #setting .container {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -412,7 +411,7 @@
       #setting .container { grid-template-columns: 1fr; gap: 3rem; }
       .setting-aside { position: static; }
     }
-    /* ─── Get the Game ─── */
+    /* Get the Game  */
     #get {
       background: linear-gradient(135deg, rgba(13,22,48,0.9) 0%, rgba(8,13,28,0.95) 100%);
       border-top: 1px solid var(--border);
@@ -466,7 +465,7 @@
     @media (max-width: 720px) {
       #get .container { grid-template-columns: 1fr; }
     }
-    /* ─── FAQ ─── */
+    /* FAQ  */
     #faq .container { max-width: 800px; }
     .faq-list { margin-top: 2.5rem; }
     .faq-item { border-bottom: 1px solid var(--border); }
@@ -503,7 +502,7 @@
     }
     .faq-a-inner { padding: 0 0 1.25rem; }
     .faq-item.open .faq-a { max-height: 400px; }
-    /* ─── Team ─── */
+    /* Team  */
     #team { background: linear-gradient(180deg, transparent 0%, rgba(13,22,48,0.4) 50%, transparent 100%); }
     #team .container { text-align: center; }
     #team .section-divider { margin: 0 auto 3rem; }
@@ -620,7 +619,7 @@
       border-color: rgba(79,195,247,0.4);
       color: var(--cyan);
     }
-    /* ─── Footer ─── */
+    /* Footer  */
     footer {
       position: relative;
       z-index: 1;
@@ -643,7 +642,7 @@
       display: block;
       margin-bottom: 0.75rem;
     }
-    /* ─── Scroll Animations ─── */
+    /* Scroll Animations  */
     .reveal {
       opacity: 0;
       transform: translateY(28px);
@@ -656,7 +655,7 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes spin { to { transform: rotate(360deg); } }
-    /* ─── Cosmic Nebula behind hero ─── */
+    /* Cosmic Nebula behind mainBanner  */
     .nebula {
       position: absolute;
       border-radius: 50%;
@@ -684,7 +683,7 @@
       bottom: 0%;
       left: 30%;
     }
-    /* ─── Highlight Band ─── */
+    /* Highlight Band  */
     .highlight-band {
       background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(79,195,247,0.04));
       border-top: 1px solid rgba(201,168,76,0.15);
@@ -711,7 +710,7 @@
   <!-- ─── NAV ─── -->
   <nav id="main-nav">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo">Realms of Legacy</a>
+      <a href="#mainBanner" class="nav-logo">Realms of Legacy</a>
       <button class="nav-toggle" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">☰</button>
       <ul class="nav-links">
         <li><a href="#about">The Game</a></li>
@@ -733,18 +732,18 @@
     </div>
   </nav>
 
-  <!-- ─── HERO ─── -->
-  <section id="hero">
-    <div class="hero-content container">
-      <p class="hero-eyebrow">Universe Table Games Presents</p>
-      <h1 class="hero-title">Realms of <span>Legacy</span></h1>
-      <p class="hero-subtitle">A Science Fantasy Tabletop Roleplaying Game</p>
-      <div class="hero-divider"></div>
-      <p class="hero-lore">
+  <!-- ─── mainBanner ─── -->
+  <section id="mainBanner">
+    <div class="mainBanner-content container">
+      <p class="mainBanner-eyebrow">Universe Table Games Presents</p>
+      <h1 class="mainBanner-title">Realms of <span>Legacy</span></h1>
+      <p class="mainBanner-subtitle">A Science Fantasy Tabletop Roleplaying Game</p>
+      <div class="mainBanner-divider"></div>
+      <p class="mainBanner-lore">
         "Welcome to the Asteral System. Through the power of plutheryte, skyships now sail beyond Gaia's
         atmosphere into the Veil, and some brave Veildivers dare push further still, into the unknown Outerveil."
       </p>
-      <div class="hero-actions">
+      <div class="mainBanner-actions">
         <a href="https://mr-universe-utg.itch.io/realms-of-legacy" target="_blank" class="btn btn-primary">Download Free Playtest</a>
         <a href="https://discord.gg/D8beSNB8Tm" target="_blank" class="btn btn-discord">Join the Discord</a>
         <a href="#about" class="btn btn-secondary">Learn More</a>
