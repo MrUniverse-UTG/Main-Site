@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realms of Legacy: A Science Fantasy TTRPG</title>
+  <!-- Favicon: adaptive SVG (black logo on light themes, white on dark), .ico fallback -->
+  <link rel="icon" href="images/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="images/icons/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Alegreya+SC:wght@400;500;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+    /* ─── Layout ─── */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    section { position: relative; z-index: 1; }
+    /* ─── Utility ─── */
+    .glow-text { text-shadow: 0 0 20px var(--cyan-glow), 0 0 60px rgba(79,195,247,0.15); }
+    .gold-text { color: var(--gold); }
+    .dim { color: var(--text-dim); }
+    /* ─── Navigation ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, rgba(4,6,15,0.97) 0%, rgba(4,6,15,0.0) 100%);
+      padding: 1.2rem 0;
+      transition: background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(4,6,15,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    nav .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .nav-links .nav-cta a {
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+    }
+    .nav-links .nav-cta a:hover {
+      background: rgba(201,168,76,0.1);
+      color: var(--gold-pale);
+    }
+    /* Hamburger */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    @media (max-width: 720px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(4,6,15,0.98);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        padding: 1rem 2rem;
+        gap: 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.85rem; padding: 0.6rem 0; }
+    }
+    /* ─── Hero ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 6rem;
+      position: relative;
+    }
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 0%, rgba(4,6,15,0.55) 100%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 820px; }
+    .hero-eyebrow {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s ease forwards;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-subtitle {
+      font-family: var(--font-heading);
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.55s ease forwards;
+    }
+    .hero-divider {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 2.5rem;
+      opacity: 0;
+      animation: fadeIn 0.8s 0.7s ease forwards;
+    }
+    .hero-lore {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 680px;
+      margin: 0 auto 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s ease forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s ease forwards;
+    }
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 3px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--void);
+      border: 1px solid var(--gold);
+    }
+    .btn-primary:hover {
+      background: var(--gold-pale);
+      box-shadow: 0 0 30px rgba(201,168,76,0.4);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--cyan);
+      border: 1px solid rgba(79,195,247,0.5);
+    }
+    .btn-secondary:hover {
+      background: rgba(79,195,247,0.08);
+      border-color: var(--cyan);
+      box-shadow: 0 0 25px var(--cyan-glow);
+      transform: translateY(-2px);
+    }
+    .btn-discord {
+      background: rgba(88,101,242,0.15);
+      color: #8b9cf4;
+      border: 1px solid rgba(88,101,242,0.4);
+    }
+    .btn-discord:hover {
+      background: rgba(88,101,242,0.25);
+      border-color: #8b9cf4;
+      transform: translateY(-2px);
+    }
+    /* ─── Sections ─── */
+    .section { padding: 6rem 0; }
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    .section-title span { color: var(--gold); }
+    .section-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 2rem;
+    }
+    .section-body {
+      font-size: 1.1rem;
+      color: var(--text);
+      max-width: 660px;
+      line-height: 1.85;
+    }
+    /* ─── About ─── */
+    #about { background: linear-gradient(180deg, transparent 0%, rgba(13,22,48,0.6) 50%, transparent 100%); }
+    #about .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .stat-card {
+      background: rgba(17,27,58,0.8);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem;
+      text-align: center;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .stat-card:hover {
+      border-color: rgba(79,195,247,0.4);
+      box-shadow: 0 0 20px rgba(79,195,247,0.07);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-label {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .about-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+    #solar-system {
+      display: block;
+      width: 440px;
+      height: 440px;
+    }
+    @media (max-width: 860px) {
+      #about .container { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { display: none; }
+    }
+    /* ─── How It Plays ─── */
+    #how {
+      background: linear-gradient(135deg, rgba(8,13,28,0.95) 0%, rgba(13,22,48,0.8) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    #how .container { text-align: center; }
+    #how .section-divider { margin: 0 auto 2.5rem; }
+    .modes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+      text-align: left;
+    }
+    .mode-card {
+      background: rgba(8,13,28,0.8);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .mode-card:nth-child(1)::before { background: radial-gradient(circle at top left, rgba(79,195,247,0.06), transparent 70%); }
+    .mode-card:nth-child(2)::before { background: radial-gradient(circle at top left, rgba(201,168,76,0.06), transparent 70%); }
+    .mode-card:nth-child(3)::before { background: radial-gradient(circle at top left, rgba(180,100,255,0.06), transparent 70%); }
+    .mode-card:hover { transform: translateY(-4px); border-color: rgba(79,195,247,0.3); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .mode-card:hover::before { opacity: 1; }
+    .mode-icon {
+      display: block;
+      width: calc(100% + 4rem);
+      height: 180px;
+      object-fit: cover;
+      margin: -2rem -2rem 1.25rem;
+      border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mode-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .mode-body { font-size: 1rem; color: var(--text-dim); line-height: 1.7; }
+    @media (max-width: 720px) {
+      .modes-grid { grid-template-columns: 1fr; }
+    }
+    /* ─── Setting ─── */
+    #setting .container {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .setting-lore {
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.9;
+    }
+    .setting-lore p { margin-bottom: 1.25rem; }
+    .keyword {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .setting-aside {
+      position: sticky;
+      top: 6rem;
+    }
+    .lore-card {
+      background: rgba(17,27,58,0.7);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 6px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .lore-card-title {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .setting-inspirations {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .setting-inspirations .insp-card { margin-bottom: 0; }
+    @media (max-width: 580px) {
+      .setting-inspirations { grid-template-columns: 1fr; }
+    }
+    .lore-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
+    .key-terms { display: flex; flex-direction: column; gap: 0.85rem; }
+    .kt-entry { display: flex; flex-direction: column; gap: 0.15rem; }
+    .kt-name {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--gold-pale);
+      text-transform: uppercase;
+    }
+    .kt-def { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; }
+    @media (max-width: 860px) {
+      #setting .container { grid-template-columns: 1fr; gap: 3rem; }
+      .setting-aside { position: static; }
+    }
+    /* ─── Get the Game ─── */
+    #get {
+      background: linear-gradient(135deg, rgba(13,22,48,0.9) 0%, rgba(8,13,28,0.95) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    #get .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .get-cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .get-cta-group .btn { text-align: center; }
+    .get-badge {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--void);
+      background: var(--gold);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-left: 0.5rem;
+    }
+    .get-feature-list {
+      list-style: none;
+      margin-top: 2rem;
+    }
+    .get-feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .get-feature-list li::before {
+      content: '◆';
+      color: var(--cyan);
+      font-size: 0.55rem;
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+    @media (max-width: 720px) {
+      #get .container { grid-template-columns: 1fr; }
+    }
+    /* ─── FAQ ─── */
+    #faq .container { max-width: 800px; }
+    .faq-list { margin-top: 2.5rem; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      color: var(--white);
+      transition: color 0.2s;
+      gap: 1rem;
+      list-style: none;
+    }
+    .faq-q:hover { color: var(--cyan); }
+    .faq-q::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+    .faq-a-inner { padding: 0 0 1.25rem; }
+    .faq-item.open .faq-a { max-height: 400px; }
+    /* ─── Team ─── */
+    #team { background: linear-gradient(180deg, transparent 0%, rgba(13,22,48,0.4) 50%, transparent 100%); }
+    #team .container { text-align: center; }
+    #team .section-divider { margin: 0 auto 3rem; }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .team-card {
+      background: rgba(17,27,58,0.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .team-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-3px);
+    }
+    .team-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--surface), var(--mid));
+      border: 2px solid var(--border);
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--gold);
+      overflow: hidden;
+    }
+    /* Portraits are transparent PNG-style art, so the gradient still shows behind them. */
+    .team-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .team-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .team-role {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.4;
+    }
+    @media (max-width: 860px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .team-grid { grid-template-columns: 1fr; }
+    }
+    /* Credits */
+    .credits-block {
+      background: rgba(8,13,28,0.8);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      text-align: left;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+    .credits-block h3 {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem 2rem;
+    }
+    .credits-grid a, .credits-grid span {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .credits-grid a:hover { color: var(--cyan); }
+    @media (max-width: 580px) {
+      .credits-grid { grid-template-columns: 1fr; }
+    }
+    /* Playtesters */
+    .playtesters-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .playtester-chip {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      background: rgba(17,27,58,0.8);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .playtester-chip:hover {
+      border-color: rgba(79,195,247,0.4);
+      color: var(--cyan);
+    }
+    /* ─── Footer ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      background: rgba(4,6,15,0.9);
+    }
+    footer p {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    footer .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    /* ─── Scroll Animations ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* ─── Cosmic Nebula behind hero ─── */
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .nebula-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(30,60,160,0.18), transparent 70%);
+      top: 10%;
+      left: -5%;
+    }
+    .nebula-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(79,195,247,0.08), transparent 70%);
+      top: 30%;
+      right: 0%;
+    }
+    .nebula-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(150,80,220,0.07), transparent 70%);
+      bottom: 0%;
+      left: 30%;
+    }
+    /* ─── Highlight Band ─── */
+    .highlight-band {
+      background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(79,195,247,0.04));
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem 0;
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+<!-- Starfield -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Nebula layers -->
+  <div class="nebula nebula-1" aria-hidden="true"></div>
+  <div class="nebula nebula-2" aria-hidden="true"></div>
+  <div class="nebula nebula-3" aria-hidden="true"></div>
+
+  <!-- ─── NAV ─── -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">Realms of Legacy</a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <ul class="nav-links">
+        <li><a href="#about">The Game</a></li>
+        <li><a href="#how">How to Play</a></li>
+        <li><a href="#setting">Setting</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#team">Team</a></li>
+        <li class="nav-dropdown">
+          <a href="#" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">Online Tools ▾</a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="https://playercharactercreator.realmsoflegacy.com/" target="_blank">Character Builder</a></li>
+            <li><a href="https://spellbook.realmsoflegacy.com/" target="_blank">Spellbook</a></li>
+            <li><a href="https://npcbuilder.realmsoflegacy.com/" target="_blank">NPC Tools</a></li>
+            <li><a href="bestiary.html">Bestiary</a></li>
+          </ul>
+        </li>
+        <li class="nav-cta"><a href="https://mr-universe-utg.itch.io/realms-of-legacy" target="_blank">Get the Game</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-content container">
+      <p class="hero-eyebrow">Universe Table Games Presents</p>
+      <h1 class="hero-title">Realms of <span>Legacy</span></h1>
+      <p class="hero-subtitle">A Science Fantasy Tabletop Roleplaying Game</p>
+      <div class="hero-divider"></div>
+      <p class="hero-lore">
+        "Welcome to the Asteral System. Through the power of plutheryte, skyships now sail beyond Gaia's
+        atmosphere into the Veil, and some brave Veildivers dare push further still, into the unknown Outerveil."
+      </p>
+      <div class="hero-actions">
+        <a href="https://mr-universe-utg.itch.io/realms-of-legacy" target="_blank" class="btn btn-primary">Download Free Playtest</a>
+        <a href="https://discord.gg/D8beSNB8Tm" target="_blank" class="btn btn-discord">Join the Discord</a>
+        <a href="#about" class="btn btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HIGHLIGHT BAND ─── -->
+  <div class="highlight-band">
+    ◆ Free Open Playtest Now Available &nbsp;·&nbsp; All Core Rules Included &nbsp;·&nbsp; No Purchase Required ◆
+  </div>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about" class="section">
+    <div class="container">
+      <div>
+        <p class="section-label reveal">About the Game</p>
+        <h2 class="section-title reveal">What is <span>Realms of Legacy?</span></h2>
+        <div class="section-divider reveal"></div>
+        <p class="section-body reveal">
+          Realms of Legacy (RoL) is a space fantasy role-playing game for a group of 4–6 friends. One player takes the
+          role of Game Master; the others build unique Player Characters and dive headfirst into the Veil.
+        </p>
+        <p class="section-body reveal" style="margin-top:1rem;">
+          It's a <strong style="color:var(--white)">build-a-class</strong> system with deep customization.
+          Start with a base Class and Specialty, then stack talents and skills to make your character truly unique.
+          No two Guardians play the same.
+        </p>
+        <div class="about-stat-grid reveal">
+          <div class="stat-card">
+            <span class="stat-num">4–6</span>
+            <span class="stat-label">Players</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">d6 / d8</span>
+            <span class="stat-label">Dice Pool</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual" aria-hidden="true">
+        <canvas id="solar-system" width="440" height="440"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT PLAYS ─── -->
+  <section id="how" class="section">
+    <div class="container">
+      <p class="section-label reveal">Gameplay</p>
+      <h2 class="section-title reveal">Three Ways to <span>Play</span></h2>
+      <div class="section-divider reveal"></div>
+      <p class="section-body reveal" style="margin:0 auto;">
+        Realms of Legacy uses a simple dice pool: roll up to a mix of d6s and d8s whenever you attempt something risky or uncertain. Look for at least one 6 or higher on any of the dice and you succeed.
+        From there, you can explore the three distinct game activities that build upon that core mechanic.
+      </p>
+      <div class="modes-grid">
+        <div class="mode-card reveal">
+          <img class="mode-icon" src="images/icons/freeform-roleplay.webp" alt="" loading="lazy">
+          <h3 class="mode-title">Freeform Roleplay</h3>
+          <p class="mode-body">Time flows fluidly, driven by your actions and intentions. Resolve conflicts, explore scenes, and weave creative stories by invoking your character, the environment, and the items at hand.</p>
+        </div>
+        <div class="mode-card reveal">
+          <img class="mode-icon" src="images/icons/tactical-combat.webp" alt="" loading="lazy">
+          <h3 class="mode-title">Tactical Combat</h3>
+          <p class="mode-body">Violent confrontations broken into 6-second intervals. Strategic planning and tight teamwork are your weapons. Every move matters when the clock is ticking and lives are on the line.</p>
+        </div>
+        <div class="mode-card reveal">
+          <img class="mode-icon" src="images/icons/veilstrider-conflict.webp" alt="" loading="lazy">
+          <h3 class="mode-title">Veilstrider Conflict</h3>
+          <p class="mode-body">Take the helm of a massive magitech ship and clash with enemy vessels or gargantuan entities. Coordinate your crew, hold your positioning, and secure victory among the stars.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SETTING ─── -->
+  <section id="setting" class="section">
+    <div class="container">
+      <div>
+        <p class="section-label reveal">Lore</p>
+        <h2 class="section-title reveal">The <span>Setting</span></h2>
+        <div class="section-divider reveal"></div>
+        <div class="setting-lore reveal">
+          <p>
+            A little over a century ago, the nations of <span class="keyword">Gaia</span> unlocked the secret
+            of travel beyond their realm. Guided by the otherworldly <span class="keyword">Armorai</span>,
+            they built the first <span class="keyword">Veilstriders</span>, sea-faring ships repurposed to
+            fly among the Vilirium gases between realms, powered by <span class="keyword">plutheryte</span>.
+          </p>
+          <p>
+            An arms race triggered reckless mining of Gaia's plutheryte reserves, unleashing a calamity
+            called <span class="keyword">the Fracture</span>, permanently corrupting and twisting the land.
+            The major nations responded with the <span class="keyword">Plutherpact</span>, banning further
+            domestic plutheryte extraction.
+          </p>
+          <p>
+            Now plutheryte is the most coveted resource in the system, and the <span class="keyword">Veildivers</span>
+            were born: adventurers who brave the Veil for artifacts, ore, and rare goods. Some push even
+            further, into the mysterious <span class="keyword">Outerveil</span>, beyond the system's very borders.
+          </p>
+          <p>
+            But the Veil is no safe road. Veilfaring marauders, blood-thirsty demons, corrupting
+            <span class="keyword">virophage</span>, and the ever-present <span class="keyword">Void</span>
+            wait for those who stray too far.
+          </p>
+        </div>
+        <div class="setting-inspirations reveal">
+          <div class="lore-card insp-card">
+            <p class="lore-card-title">Inspirations: Games</p>
+            <p>Pathfinder 2e · Forbidden Lands · Blades in the Dark · Guns of Icarus · Barotrauma</p>
+          </div>
+          <div class="lore-card insp-card">
+            <p class="lore-card-title">Inspirations: Themes</p>
+            <p>Treasure Planet · Spelljammer · Larklight · Aeronaut's Windlass · The Olympian Affair</p>
+          </div>
+        </div>
+      </div>
+      <div class="setting-aside">
+        <div class="lore-card reveal">
+          <p class="lore-card-title">Key Terms</p>
+          <div class="key-terms">
+            <div class="kt-entry">
+              <span class="kt-name">The Veil</span>
+              <span class="kt-def">What we refer to as outer space or the cosmos is what the creatures of this game refer to as the Veil. The unknown region beyond the boundaries of the solar system is known as the Outerveil.</span>
+            </div>
+            <div class="kt-entry">
+              <span class="kt-name">The Shroud</span>
+              <span class="kt-def">A plane of ethereal existence that mirrors the Veil, the Shroud is a realm where time flows at a fraction of its normal pace. When mortals perish, their souls drift into this shadowy expanse, wandering aimlessly, finding refuge in a mirrored realm, or falling prey to powerful entities that can move freely between the Veil and the Shroud.</span>
+            </div>
+            <div class="kt-entry">
+              <span class="kt-name">Veilstriders</span>
+              <span class="kt-def">Sea-faring ships that have been upgraded to fly through the cosmos of the Veil using their magitech Core engines and solar sails. Their crews are referred to as Veildivers.</span>
+            </div>
+            <div class="kt-entry">
+              <span class="kt-name">Plutheryte</span>
+              <span class="kt-def">A rare and ancient ore that holds pure magical energy and is highly sought after. Its origins are unknown even to the oldest entities within the Veil.</span>
+            </div>
+            <div class="kt-entry">
+              <span class="kt-name">Sorce</span>
+              <span class="kt-def">The life of the Veil and source of all magic. Powerful creatures can manipulate Sorce to cast Spells or enhance their martial prowess.</span>
+            </div>
+            <div class="kt-entry">
+              <span class="kt-name">Aspects</span>
+              <span class="kt-def">Often revered as gods of the Veil. There are six kinds of Aspects known throughout the Veil, some controlling certain domains: Stellar (stars and suns), Eternal (Void and Black Holes), Primal (Planetary), Lunar (Moons), Cosmic (natural forces), and Ascended (demigods).</span>
+            </div>
+            <div class="kt-entry">
+              <span class="kt-name">Shadow Gloom</span>
+              <span class="kt-def">Magical darkness that consumes all natural light. Divine Light does not destroy it but does suppress it. Creatures with Nightvision cannot see through Shadow Gloom.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GET THE GAME ─── -->
+  <section id="get" class="section">
+    <div class="container">
+      <div>
+        <p class="section-label reveal">Download</p>
+        <h2 class="section-title reveal">Get the <span>Game</span></h2>
+        <div class="section-divider reveal"></div>
+        <p class="section-body reveal">
+          Realms of Legacy is in free open playtest. Download everything you need to play:
+          rules, character sheets, and all core content, with zero cost.
+        </p>
+        <div class="get-cta-group reveal">
+          <a href="https://mr-universe-utg.itch.io/realms-of-legacy" target="_blank" class="btn btn-primary">
+            Rulebook &amp; Character Sheets <span class="get-badge">Free</span>
+          </a>
+          <a href="https://discord.gg/D8beSNB8Tm" target="_blank" class="btn btn-discord">
+            Join the Playtest Discord
+          </a>
+        </div>
+      </div>
+      <div>
+        <ul class="get-feature-list reveal">
+          <li>All core rules and player options included at no charge</li>
+          <li>Character Creator tool available online</li>
+          <li>Spellbook reference tool available online</li>
+          <li>NPC Stat Block generators for GMs</li>
+          <li>Discord server for direct feedback and early previews</li>
+          <li>Full game + GM Compendium planned for release after playtest</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─── -->
+  <section id="faq" class="section">
+    <div class="container">
+      <p class="section-label reveal">Questions</p>
+      <h2 class="section-title reveal">Frequently <span>Asked</span></h2>
+      <div class="section-divider reveal"></div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Who made Realms of Legacy?</div>
+          <div class="faq-a"><div class="faq-a-inner">I'm Nick (Mr. Universe online), and I've been playing and running tabletop games for over a decade. I've been working on Realms of Legacy for a couple of years now alongside a team of friends and collaborators.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Why did you create this game?</div>
+          <div class="faq-a"><div class="faq-a-inner">I wanted a space fantasy game that blended crunchy tactical combat, to-the-point exploration, and engaging starship battles. I also wanted deep character customization, players who stay engaged outside their turns, and dice rolls everyone could interpret instantly.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Do I have to pay anything?</div>
+          <div class="faq-a"><div class="faq-a-inner">No. All rules, player options, and GM options are currently free during the open playtest phase. Download everything you need from itch.io at no cost.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What happens after the playtest?</div>
+          <div class="faq-a"><div class="faq-a-inner">The full Player Codex (all core rules and options) will remain free to download. The paid core rulebook will add the GM Compendium (in-depth encounter creation tools) and the Veildiver's Guide to the Veil (official setting content and worldbuilding inspiration).</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Will there be a physical book?</div>
+          <div class="faq-a"><div class="faq-a-inner">Yes, a print-on-demand version is planned for DriveThruRPG after the game reaches full release. The digital version will launch first.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TEAM ─── -->
+  <section id="team" class="section">
+    <div class="container">
+      <p class="section-label reveal">The People</p>
+      <h2 class="section-title reveal">Meet the <span>Team</span></h2>
+      <div class="section-divider reveal"></div>
+      <div class="team-grid reveal">
+        <div class="team-card">
+          <div class="team-avatar"><img src="images/icons/Nick.webp" alt="" width="72" height="72" loading="lazy" /></div>
+          <p class="team-name">Nick</p>
+          <p class="team-role">Creator, Game Designer, Creative Director & Writer</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><img src="images/icons/Jessica.webp" alt="" width="72" height="72" loading="lazy" /></div>
+          <p class="team-name">Jessica</p>
+          <p class="team-role">Editor, Art Director & Game Consultant</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><img src="images/icons/Devin.webp" alt="" width="72" height="72" loading="lazy" /></div>
+          <p class="team-name">Devin</p>
+          <p class="team-role">Lore Writer & World Builder</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><img src="images/icons/Cameron.webp" alt="" width="72" height="72" loading="lazy" /></div>
+          <p class="team-name">Cameron</p>
+          <p class="team-role">Lore Writer & World Builder</p>
+        </div>
+      </div>
+
+      <!-- Credits -->
+      <div class="credits-block reveal">
+        <h3>Additional Credits</h3>
+        <div class="credits-grid">
+          <a href="https://kendramorganart.carrd.co/" target="_blank">Kendra Morgan, Lead Artist</a>
+          <a href="https://www.artstation.com/gornik" target="_blank">Nikolai Gorishnii, Lead Artist</a>
+          <a href="https://www.artstation.com/tipovangog" target="_blank">Aidar Kumushbekov, Lead Artist</a>
+          <a href="https://www.SamanthaChapmanEditing.com" target="_blank">Samantha Chapman, Editing</a>
+          <a href="https://www.fiverr.com/s/wr5VWg" target="_blank">Nicholas L. Carter, Editing</a>
+          <a href="https://www.fiverr.com/gafree_" target="_blank">Gafree, Artist</a>
+          <a href="https://www.fiverr.com/bluidu" target="_blank">Lena Gerner, Artist</a>
+          <a href="https://k0r1.crd.co/" target="_blank">k0r1, Artist</a>
+          <span>Torororos, Artist</span>
+          <span>Alex Coggon, Artist</span>
+          <span>N.D. Chenard, Artist</span>
+          <span>Ali Nakhaei, Artist</span>
+          <span>Zahra Vakili, Artist</span>
+          <span>Hassane Oussellou, Artist</span>
+          <a href="https://www.fiverr.com/s/jw4gVo" target="_blank">Arturo G. Martinez, Cartographer</a>
+          <a href="https://purasoza.com/" target="_blank">Samuel Soza, Graphic Design</a>
+          <a href="https://www.fiverr.com/lesmarc_art" target="_blank">Marcos Lescano, Graphic Design</a>
+          <a href="https://rymarq.itch.io/" target="_blank">Kevin P. T., Game Consultation</a>
+          <a href="https://purplepeoplegames.itch.io/" target="_blank">Danial K., Game Consultation</a>
+        </div>
+      </div>
+
+      <!-- Playtesters -->
+      <div class="reveal">
+        <p class="section-label" style="text-align:center; margin-bottom:0.5rem;">Veteran Playtesters</p>
+        <div class="playtesters-wrap">
+          <span class="playtester-chip">Cade</span>
+          <span class="playtester-chip">Joshua R.</span>
+          <span class="playtester-chip">Martin</span>
+          <span class="playtester-chip">Dan M.</span>
+          <span class="playtester-chip">Devin C.</span>
+          <span class="playtester-chip">Daniel K.</span>
+          <span class="playtester-chip">Jordan</span>
+          <span class="playtester-chip">Jessica</span>
+          <span class="playtester-chip">Brian</span>
+          <span class="playtester-chip">Briana G.</span>
+          <span class="playtester-chip">RyMarq</span>
+          <span class="playtester-chip">Staxlotl</span>
+          <span class="playtester-chip">Cameron</span>
+          <span class="playtester-chip">Devin T.</span>
+          <span class="playtester-chip">Nicole</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="container">
+      <span class="footer-logo">Realms of Legacy</span>
+      <p>© 2026 Universe Table Games &nbsp;·&nbsp;</p>
+    </div>
+  </footer>
+
+<script src="shared.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
