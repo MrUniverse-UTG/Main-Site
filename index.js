@@ -1,15 +1,15 @@
 // ─── Scroll reveal ───
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      e.target.style.transitionDelay = (i % 4) * 0.1 + 's';
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
-revealEls.forEach(el => observer.observe(el));
+//const revealEls = document.querySelectorAll('.reveal');
+//const observer = new IntersectionObserver((entries) => {
+//  entries.forEach((e, i) => {
+//    if (e.isIntersecting) {
+//      e.target.style.transitionDelay = (i % 4) * 0.1 + 's';
+//      e.target.classList.add('visible');
+//      observer.unobserve(e.target);
+//    }
+//  });
+//}, { threshold: 0.12 });
+//revealEls.forEach(el => observer.observe(el));
 
 // ─── Solar System ───
 (function() {
